@@ -1,0 +1,1 @@
+Repositório destinado as aulas de POO TypeScript.
