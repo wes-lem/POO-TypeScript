@@ -1,1 +1,1 @@
-Repositório destinado as aulas de POO TypeScript... :D
+Repositório destinado as aulas de POO TypeScript. :D
