@@ -1,37 +1,29 @@
-// desenhando um quadrado
-// criando
-// desenhando a matriz
-// movimento do teclado
+class Cell{
+  x:number;
+  y:number;
+  color: p5.Color;
 
-import p5 from "p5";
+  constructor(x:number, y:number, color:p5.Color){
+    this.x = x;
+    this.y = y;
+    this.color = color;
+  }
+}
 
-// dando volta
-
-// mostrando framerate
-// entendendo um timer
-// andando sozinho
-// andando com teclado
-
-// class Cell{
-//   x:number;
-//   y:number;
-
-//   color: p5.Color;
-
-//   constructor(x:number, y:number, color:p5.Color){
-//     this.x = x;
-//     this.y = y;
-//     this.color = color;
-//   }
-// }
-
-// class Snake{
-//   cells: Cell[];
-//   vx: number;
-//   vy:number;
-//   color:p5.Color;
-//   /////////////////parei aqui
-// }
+class Snake{
+  body: Cell[];
+  vx: number;
+  vy:number;
+  color:p5.Color;
+  constructor(){
+    this.body = [];
+    this.vx - 0;
+    this.vy - 0;
+    for(let i = 0; i < 3; i++){
+      this.body.push(new Cell(i, 0, color(0, 0,255)));
+    }
+  }
+}
 
 const NL = 6;
 const NC = 6;
@@ -42,14 +34,14 @@ let snake_y = 0;
 let snake_vx = 0;
 let snake_vy = 0;
 
-let snake_color;
-let cell_color;
+let snake_color: p5.Color;
+let cell_color: p5.Color;
 
 let timer = 0;
 
 let food_x = 0;
 let food_y = 0;
-let food_color;
+let food_color: p5.Color;
 let food_count = 0;
 
 let tempo = 0;
@@ -84,7 +76,7 @@ function food_generate(){
   food_color = color(255, random(255), random(255));
 }
 
-function draw_cell(x,y, color){
+function draw_cell(x: number,y: number, color:p5.Color){
   noStroke();
   fill(color);
   square(x * lado + 1, y * lado + 1, lado - 1);
