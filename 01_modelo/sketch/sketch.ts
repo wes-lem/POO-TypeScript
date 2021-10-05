@@ -3,6 +3,8 @@
 // desenhando a matriz
 // movimento do teclado
 
+import p5 from "p5";
+
 // dando volta
 
 // mostrando framerate
@@ -10,6 +12,26 @@
 // andando sozinho
 // andando com teclado
 
+// class Cell{
+//   x:number;
+//   y:number;
+
+//   color: p5.Color;
+
+//   constructor(x:number, y:number, color:p5.Color){
+//     this.x = x;
+//     this.y = y;
+//     this.color = color;
+//   }
+// }
+
+// class Snake{
+//   cells: Cell[];
+//   vx: number;
+//   vy:number;
+//   color:p5.Color;
+//   /////////////////parei aqui
+// }
 
 const NL = 6;
 const NC = 6;
