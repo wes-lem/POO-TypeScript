@@ -3,6 +3,8 @@ class Entity{
   y:number;
   image: p5.Image;
   step: number;
+  alive: boolean;
+  timeToRessurect: number;
 
   //parâmetros
   constructor(x:number, y:number, step:number, image: p5.Image){
@@ -10,10 +12,29 @@ class Entity{
     this.y = y;
     this.step = step;
     this.image = image;
+    this.alive = true;
+    this.timeToRessurect = 0;
   }
+
+  update(): void{
+    if(!this.alive){
+      this.timeToRessurect--;
+      if(this.timeToRessurect <= 0){
+        this.alive = true;
+        this.timeToRessurect = 0;
+      }
+    }
+  }
+
+  
+
   //metodos
   draw(): void{
-    image(this.image, this.x * this.step, this.y * this.step, this.step, this.step);
+    if(!this.alive){
+      return
+    }else{
+      image(this.image, this.x * this.step, this.y * this.step, this.step, this.step);
+    }
   }
 }
 
@@ -104,12 +125,12 @@ function mobs_loop(){
   }
 }
 
-function friedChiken(){
-  if(fox.x == chiken.x && fox.y == chiken.y){
-    chiken.image = chiken_fried_img;
-    fox.image = fox_sit_img;
-  }
-}
+// function friedChiken(){
+//   if(fox.x == chiken.x && fox.y == chiken.y){
+//     chiken.image = chiken_fried_img;
+//     fox.image = fox_sit_img;
+//   }
+// }
 
 function loadImage(path: string): p5.Image{
   return loadImage(
@@ -132,6 +153,11 @@ function preload(){
 }
 
 function keyPressed(){
+  let fox_x = fox.x;
+  let fox_y = fox.y;
+  let chiken_x = chiken.x;
+  let chiken_y = chiken.y;
+
   // Raposa
   if(keyCode === LEFT_ARROW){
     fox.x--;
@@ -171,9 +197,24 @@ function keyPressed(){
       chiken.y++;
     }
   }
+
+  // Proibir colisão
+  // if(fox.x == chiken.x && fox.y == chiken.y){
+  //   fox.x = fox_x;
+  //   fox.y = fox_y;
+  //   chiken.x = chiken_x;
+  //   chiken.y = chiken_y;
+  // }
+
+  if(fox.x == chiken.x && fox.y == chiken.y){
+    chiken.alive = false;
+    chiken.timeToRessurect = 30;
+  }
 }
 
 function setup(){
+  frameRate(10);
+
   board = new Board(7, 7, size, board_img);
   fox = new Entity(1, 1, size, fox_img);
   chiken = new Entity(2,2, size, chiken_img);
@@ -182,8 +223,11 @@ function setup(){
 }
 
 function draw(){
+  chiken.update();
+  fox.update();
+
   mobs_loop();
-  friedChiken();
+  // friedChiken();
   
   board.draw();
   chiken.draw();
