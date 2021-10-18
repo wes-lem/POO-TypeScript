@@ -26,8 +26,6 @@ class Entity{
     }
   }
 
-  
-
   //metodos
   draw(): void{
     if(!this.alive){
@@ -125,12 +123,13 @@ function mobs_loop(){
   }
 }
 
-// function friedChiken(){
-//   if(fox.x == chiken.x && fox.y == chiken.y){
-//     chiken.image = chiken_fried_img;
-//     fox.image = fox_sit_img;
-//   }
-// }
+function friedChiken(){
+  if(!chiken.alive){
+    fox.image = fox_sit_img;
+  }else{
+    fox.image = fox_img;
+  }
+}
 
 function loadImage(path: string): p5.Image{
   return loadImage(
@@ -206,6 +205,7 @@ function keyPressed(){
   //   chiken.y = chiken_y;
   // }
 
+  //Matar galinha
   if(fox.x == chiken.x && fox.y == chiken.y){
     chiken.alive = false;
     chiken.timeToRessurect = 30;
@@ -227,7 +227,7 @@ function draw(){
   fox.update();
 
   mobs_loop();
-  // friedChiken();
+  friedChiken();
   
   board.draw();
   chiken.draw();
