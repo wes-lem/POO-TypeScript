@@ -55,7 +55,7 @@ class Banco {
             }
             if(pessoa.nome == nome){
                 this.espera.splice(i, 1);
-                return Pessoa;
+                return pessoa;
             }
         }
     }
