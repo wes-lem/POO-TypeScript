@@ -23,43 +23,59 @@ class Cinema{
         }
     }
 
-    reservar(pessoa: Cliente, cadeira:number):boolean{
-        for(let i = 0; i < this.cadeiras.length; i++){
-            if(this.cadeiras[i] == pessoa){
-                console.log("fail: cliente ja esta no cinema");
-                return false;
-            }
-            if(cadeira > this.cadeiras.length || cadeira < 0){
-                console.log("fail: número da cadeira inexistente");
-                return false;
-            }
-            if(this.cadeiras[cadeira] !== null){
-                console.log("fail: cadeira ja esta ocupada");
-                return false;
-            }
+    indexOf(id: String): number{
+        return this.cadeiras.findIndex(c => c != null && c.id == id);
 
-            this.cadeiras[cadeira] = pessoa;
-            return true;
-        }
+        // for(let i = 0; i < this.cadeiras.length; i++){
+        //     let cad = this.cadeiras[i];
+        //     if(cad != null && cad.id == id){
+        //         return i;
+        //     }
+        // }
+        // return -1;
     }
 
-    cancelar(id:string):Cliente{
-        for(let i = 0; i < this.cadeiras.length; i++){
-            if(this.cadeiras[i] == null){
-
-            }else if(this.cadeiras[i].id == id){
-                let aux = this.cadeiras[i];
-                this.cadeiras[i] = null;
-                return aux;
-            }
+    reservar(pessoa: Cliente, cadeira:number):boolean{
+        if(cadeira > this.cadeiras.length || cadeira < 0){
+            console.log("fail: número da cadeira inexistente");
+            return false;
+        }
+        if(this.cadeiras[cadeira] != null){
+            console.log("fail: cadeira ja esta ocupada");
+            return false;
         }
 
+        if(this.indexOf(pessoa.id) != -1){
+            console.log("Você já está na cadeira!");
+            return false;
+        }
+
+        this.cadeiras[cadeira] = pessoa;
+        return true;
+
+        // for(let i = 0; i < this.cadeiras.length; i++){
+        //     if(this.cadeiras[i] == pessoa){
+        //         console.log("fail: cliente ja esta no cinema");
+        //         return false;
+        //     }
+
+            
+        // }
+    }
+
+    cancelar(id:string):boolean{
+        let posicao = this.indexOf(id);
+        if (posicao == -1){
+            this.cadeiras[posicao] = null;
+            return true;
+        }
         console.log("fail: cliente nao esta no cinema");
+        return false
     }
 
     public toString():string{
         let str = "[ ";
-        for(let i = 0; i < this.cadeiras.length; i++){
+            for(let i = 0; i < this.cadeiras.length; i++){
             if(this.cadeiras[i] == null){
                 str += "- "
             }else{
@@ -88,3 +104,6 @@ console.log(cinema.toString());
 
 // cinema = new Cinema(3);
 // console.log(cinema.toString());
+
+// let lista = [1,2,3,4,5,6,7,8];
+// console.log(lista.indexOf(4));
