@@ -189,68 +189,68 @@ class Pett{
     }
 }
 
-class IO{
-    createPet(): Pett{
-        write("Digite o nome do seu pet: ");
-        let nome = input();
-        write("Digite energia: ");
-        let energia = input();
-        write("Digite saciedade: ");
-        let saciedade = input();
-        write("Digite limpeza: ");
-        let limpeza = input();
+// class IO{
+//     createPet(): Pett{
+//         write("Digite o nome do seu pet: ");
+//         let nome = input();
+//         write("Digite energia: ");
+//         let energia = input();
+//         write("Digite saciedade: ");
+//         let saciedade = input();
+//         write("Digite limpeza: ");
+//         let limpeza = input();
     
-        let pet = new Pett(nome, energia, saciedade, limpeza);
+//         let pet = new Pett(nome, energia, saciedade, limpeza);
     
-        return pet;
-    }
+//         return pet;
+//     }
     
-    mostrarHelp(){
-        write("Comandos:\n");
-        write(" init <nome> <energia> <fome> <limpeza>: cria um novo pet\n");
-        write(" show: mostra o pet\n");
-        write(" play: faz o pet brincar\n");
-        write(" eat: faz o pet comer\n");
-        write(" sleep: faz o pet dormir\n");
-        write(" shower: faz o pet tomar banho\n");
-        write(" end: sai do programa\n");
+//     mostrarHelp(){
+//         write("Comandos:\n");
+//         write(" init <nome> <energia> <fome> <limpeza>: cria um novo pet\n");
+//         write(" show: mostra o pet\n");
+//         write(" play: faz o pet brincar\n");
+//         write(" eat: faz o pet comer\n");
+//         write(" sleep: faz o pet dormir\n");
+//         write(" shower: faz o pet tomar banho\n");
+//         write(" end: sai do programa\n");
 
-    }
+//     }
 
-    shell(){
-        let pet = this.createPet();
+//     shell(){
+//         let pet = this.createPet();
 
-        while(true){
-            write("! ");
-            let line = input();
-            let words = line.split(" ");
+//         while(true){
+//             write("! ");
+//             let line = input();
+//             let words = line.split(" ");
 
-            if(words[0] == "end"){
-                break;
-            }else if(words[0] == "init"){
-                let nome = words[1];
-                let energ = words[2]
-                let sacMac = words[3];
-                let limp = words[4];
-                pet = new Pett(nome, energ, sacMac, limp);
-            }else if(words[0] == "show"){
-                write("" + pet.toString());
-            }else if(words[0] == "help"){
-                this.mostrarHelp();
-            }else if(words[0] == "play"){
-                pet.brincar();
-            }else if(words[0] == "eat"){
-                pet.comer();
-            }else if(words[0] == "sleep"){
-                pet.dormir();
-            }else if(words[0] == "shower"){
-                pet.banhar();
-            }else{
-                console.log("Comando inválido.");
-            }
-        }
-    }
-}
+//             if(words[0] == "end"){
+//                 break;
+//             }else if(words[0] == "init"){
+//                 let nome = words[1];
+//                 let energ = words[2]
+//                 let sacMac = words[3];
+//                 let limp = words[4];
+//                 pet = new Pett(nome, energ, sacMac, limp);
+//             }else if(words[0] == "show"){
+//                 write("" + pet.toString());
+//             }else if(words[0] == "help"){
+//                 this.mostrarHelp();
+//             }else if(words[0] == "play"){
+//                 pet.brincar();
+//             }else if(words[0] == "eat"){
+//                 pet.comer();
+//             }else if(words[0] == "sleep"){
+//                 pet.dormir();
+//             }else if(words[0] == "shower"){
+//                 pet.banhar();
+//             }else{
+//                 console.log("Comando inválido.");
+//             }
+//         }
+//     }
+// }
 
-let io = new IO();
-io.shell();
+// let io = new IO();
+// io.shell();
