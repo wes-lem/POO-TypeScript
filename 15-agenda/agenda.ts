@@ -111,69 +111,55 @@ class Contato {
 }
 
 class Agenda{
-    constructor(private contatos: Array<Contato>){ }
+    contatos: Map<string, Contato>;
 
-    findPosByName(nome: string): number{
-        for(let i = 0; i < this.contatos.length; i++){
-            if(this.contatos[i].getName() == nome){
-                return i;
-            }
-        }
-        return -1;
+    constructor(){
+        this.contatos = new Map <string, Contato>();
     }
 
-    addContato(nome: string, fones: Array<Fone>){
-        let pos = this.findPosByName(nome);
-        if(pos == -1){
-            this.contatos.push(new Contato(nome, fones));
+    addContato(contato: Contato){
+        // if(this.contatos.has(contato.getName())){
+        //     let aux = new Contato(contato.getName(), contato.getFones());
+
+        //     for(let i = 0; i < contato.getFones().length; i++){
+        //         aux.addFone(contato.getFones[i]);
+        //     }
+
+
+        //     this.contatos.set(contato.getName(), aux);
+        //     return;
+        // }
+
+        this.contatos.set(contato.getName(), contato);
+        
+    }
+
+    findContato(nome: string){
+        let str = "";
+        if (this.contatos.has(nome)){
+            str += this.contatos.get(nome);
+            return str;
+        }
+    }
+
+    rmContato(nome: string):boolean{
+        if (this.contatos.has(nome)){
+            this.contatos.delete(nome);
             return true;
         }
-
-        for(let i = 0; i < fones.length; i++){
-            this.contatos[pos].addFone(fones[i]);
-        }
-        return true;
-    }
-
-    findContato(nome: string): Contato | boolean{
-        for(let i = 0; i < this.contatos.length; i++){
-            if(this.contatos[i].getName() == nome){
-                return this.contatos[i];
-            }
-        }
-        return false;
-    }
-
-    rmContato(nome: string){
-        let pos = this.findPosByName(nome);
-        if(pos == -1){
-            console.log("fail: não existe contato com esse nome");
+        else{
+            console.log("Achamo não, ó.")
             return false;
         }
-
-        this.contatos.splice(pos,1);
-        return true;
     }
 
-    busca(pattern: string):Array<Contato>{
-        let result = new Array<Contato>();
-        for(let i = 0; i < this.contatos.length; i++){
-            let fones = this.contatos[i].getFones();
-
-            if(this.contatos[i].getName().includes(pattern)){
-                result.push(this.contatos[i]);
-            }else{
-                for(let x = 0; x < fones.length; x++){
-                    if(fones[x].getLabel().includes(pattern)){
-                        result.push(this.contatos[i]);
-                        break;
-                    }else if(fones[x].getNumber().includes(pattern)){
-                        result.push(this.contatos[i]);
-                        break;
-                    }
+    busca(pattern: string): Array<string>{
+        let result: Array<string> = [];
+            for (let contact of this.contatos.values()){
+                if(contact.toString().includes(pattern)){
+                    result.push(contact.toString());
                 }
             }
-        } 
         return result;
     }
 
@@ -181,15 +167,16 @@ class Agenda{
         return this.contatos;
     }
 
-    toString():string{
-        this.contatos.sort();
-
-        let str = "";
-        for(let i = 0; i < this.contatos.length; i++){
-            str += "- "
-            str += this.contatos[i].toString();
-            if(i != this.contatos.length - 1){ str += "\n"}
+    toString(): string{
+        let str: string = "";
+        
+        for (let contato of this.contatos.values()){
+            str += contato.toString();
+            str += "\n";
         }
+
+g
+
         return str;
     }
 }
@@ -198,29 +185,35 @@ let telefone = [];
 telefone.push(new Fone("oi", "11111"));
 telefone.push(new Fone("vivo", "22222"));
 
-let contato = [];
-contato.push(new Contato("Weslem Rodrigues", telefone));
-contato.push(new Contato("Fernanda", telefone));
+let contato = new Contato("Weslem Rodrigues", telefone);
+let contato2 = new Contato("Fernanda", telefone);
 
-let agenda = new Agenda(contato);
-// console.log(agenda.toString());
+let agenda = new Agenda();
+agenda.addContato(contato);
+agenda.addContato(contato2);
+console.log(agenda.toString());
 
 let telefone2 = [];
 telefone2.push(new Fone("tim", "44444"));
 
-agenda.addContato("Weslem Rodrigues", telefone2);
-// console.log(agenda.toString());
-
-let telefone3 = [];
-telefone3.push(new Fone("claro", "33333"));
-agenda.addContato("Fernanda", telefone3);
-
-// agenda.rmContato("Fernanda");
-// console.log(agenda.toString());
-
+agenda.addContato(new Contato("Weslem Rodrigues", telefone2));
 console.log(agenda.toString());
-console.log("///");
-console.log("Resultado:\n"+agenda.busca("es").join("\n").toString());
+
+console.log(agenda.busca("Fernanda").toString());
+
+agenda.rmContato("Weslem Rodrigues");
+console.log(agenda.toString());
+
+// let telefone3 = [];
+// telefone3.push(new Fone("claro", "33333"));
+// agenda.addContato("Fernanda", telefone3);
+
+// // agenda.rmContato("Fernanda");
+// // console.log(agenda.toString());
+
+// console.log(agenda.toString());
+// console.log("///");
+// console.log("Resultado:\n"+agenda.busca("es").join("\n").toString());
 
 // console.log(agenda.findContato("Rodrigues").toString());
 
