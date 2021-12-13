@@ -175,8 +175,6 @@ class Agenda{
             str += "\n";
         }
 
-g
-
         return str;
     }
 }
