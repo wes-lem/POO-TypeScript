@@ -1,7 +1,24 @@
-class Paciente{
-    private medicos: Map<string, Medico>;
+interface IPaciente {
+    addMedico(medico: IMedico);
+    getDiagnostico(): string;
+    getNome(): string;
+    getMedicos(): Array<string>;
+    getMedEspec():Array<IMedico>;
+    removerMedico(nome: string);
+}
+
+interface IMedico {
+    addPaciente(paciente: IPaciente);
+    getEspecialidade(): string;
+    getNome(): string;
+    getPacientes(): Array<string>;
+    removerPaciente(nome: string);
+}
+
+class Paciente implements IPaciente{
+    private medicos: Map<string, IMedico>;
     constructor(private nome: string, private diagnostico: string){
-        this.medicos = new Map<string, Medico>();
+        this.medicos = new Map<string, IMedico>();
     }
 
     public getNome(): string {
@@ -17,7 +34,7 @@ class Paciente{
         return [...this.medicos.values()];
     }
 
-    public addMedico(medico: Medico){
+    public addMedico(medico: IMedico){
         let chave = medico.getNome();
         if (this.medicos.has(chave))
             return;
@@ -35,7 +52,7 @@ class Paciente{
     }
 
     public removerMedico(key: string): void {
-        let medico: undefined | Medico = this.medicos.get(key);
+        let medico: undefined | IMedico = this.medicos.get(key);
         if (medico !== undefined) {
             this.medicos.delete(key);
             medico.removerPaciente(this.nome);
@@ -49,9 +66,9 @@ class Paciente{
 }
 
 class Medico{
-    private pacientes: Map<string, Paciente>;
+    private pacientes: Map<string, IPaciente>;
     constructor(private nome: string, private especialidade: string){
-        this.pacientes = new Map<string, Paciente>();
+        this.pacientes = new Map<string, IPaciente>();
     }
 
     public getNome(): string {
@@ -64,7 +81,7 @@ class Medico{
         return [...this.pacientes.keys()];
     }
 
-    public addPaciente(paciente: Paciente){
+    public addPaciente(paciente: IPaciente){
         let chave = paciente.getNome();
         if (this.pacientes.has(chave))
             return;
@@ -84,7 +101,7 @@ class Medico{
     }
 
     public removerPaciente(key: string): void {
-        let paciente: undefined | Paciente = this.pacientes.get(key);
+        let paciente: undefined | IPaciente = this.pacientes.get(key);
         if (paciente !== undefined) {
             this.pacientes.delete(key);
             paciente.removerMedico(this.nome);
@@ -98,36 +115,36 @@ class Medico{
 }
 
 class Hospital{
-    private pacientes: Map<string, Paciente>;
-    private medicos: Map<string, Medico>;
+    private pacientes: Map<string, IPaciente>;
+    private medicos: Map<string, IMedico>;
     constructor(){
-        this.pacientes = new Map<string, Paciente>();
-        this.medicos = new Map<string, Medico>();
+        this.pacientes = new Map<string, IPaciente>();
+        this.medicos = new Map<string, IMedico>();
     }
 
-    public addPaciente(paciente: Paciente): void {
+    public addPaciente(paciente: IPaciente): void {
         let chave = paciente.getNome();
         if (this.pacientes.has(chave))
             return;
         this.pacientes.set(chave, paciente);
     }
 
-    public addMedico(medico: Medico): void {
+    public addMedico(medico: IMedico): void {
         let chave = medico.getNome();
         if (this.medicos.has(chave))
             return;
         this.medicos.set(chave, medico);
     }
 
-    public getPaciente(nome: string): Paciente {
-        let paciente: undefined | Paciente = this.pacientes.get(nome);
+    public getPaciente(nome: string): IPaciente {
+        let paciente: undefined | IPaciente = this.pacientes.get(nome);
         if (paciente === undefined)
             throw new Error("Paciente não encontrado");
         return paciente;
     }
 
-    public getMedico(nome: string): Medico {
-        let medico: undefined | Medico =  this.medicos.get(nome);
+    public getMedico(nome: string): IMedico {
+        let medico: undefined | IMedico =  this.medicos.get(nome);
         if (medico === undefined)
             throw new Error("Medico não encontrada");
         return medico;
